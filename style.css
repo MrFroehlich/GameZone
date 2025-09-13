@@ -1,0 +1,935 @@
+/* ========== Light Theme (Standard) ========== */
+
+/* =======================
+   Grundlayout / Body
+======================= */
+
+body {
+  background: #f2f5fa; /* leichtes, frisches Blau-Grau statt grelles Weiß */
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+  background-color: #00509e;
+  color: white;
+  padding: 2.5rem 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.logo, .icon-right {
+  font-size: 2.5rem;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+/* Begrüßung / Intro */
+.intro {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #e0f1ff; /* statt beige: helles Blau */
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.intro h2 {
+  margin-top: 0;
+}
+
+/* Grid & Cards */
+.grid {
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  text-decoration: none;
+  color: #00509e;
+  font-weight: bold;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, color 0.3s ease;
+}
+
+.card:hover {
+  background-color: #dff0ff; /* zarter Hellblau-Hover statt Gelblich */
+  transform: scale(1.03);
+}
+
+.emoji {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-weight: normal;
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  margin-top: auto;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+/*_________________________________________________________________________*/
+
+
+/* === Modal (helles Design) === */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0; /* top:0; right:0; bottom:0; left:0; */
+  background: rgba(255, 255, 255, 0.6); /* helles halbtransparentes Overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fefefe;
+  color: #222;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  position: relative;
+  animation: fadeInScale 0.3s ease-in-out;
+  text-align: center; /* damit Überschrift & Inhalt zentriert sind */
+}
+
+.hidden {
+  display: none;
+}
+
+/* sanfte Animation beim Öffnen */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+/* Mode Select */
+.mode-select {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.mode-btn {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background: #fafafa;
+  color: #333;
+  font-size: 1rem;
+  cursor: pointer;
+  flex: 1;
+  margin-right: 0.5rem;
+  transition: background 0.2s ease, color 0.2s ease;
+  user-select: none;
+}
+
+.mode-btn:last-child {
+  margin-right: 0;
+}
+
+.mode-btn.active {
+  background-color: #3399ff;
+  color: #fff;
+  border-color: #3399ff;
+}
+
+.mode-btn:hover {
+  background-color: #eaeaea;
+}
+
+/* Kategorien Auswahl */
+.category-select {
+  display: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+
+.category-select label {
+  font-size: 1rem;
+  background: #dff0ff;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.category-select input[type="checkbox"] {
+  accent-color: #3399ff;
+}
+
+
+/* Start Button */
+.start-btn {
+  background-color: #3399ff;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s ease;
+  width: 100%;
+  user-select: none;
+}
+
+.start-btn:hover {
+  background-color: #2b89e0;
+}
+
+/* Close Button Emoji */
+.close-modal {
+  background: none !important;
+  border: none;
+  position: absolute;
+  color: white;
+  top: 0.7rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+  user-select: none;
+}
+
+.close-modal:hover {
+  transform: scale(1.3);
+}
+
+
+
+.gender-select {
+  margin: 1.5rem 0 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #222;
+}
+
+.gender-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.gender-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid #bbb;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  color: #222;
+}
+
+.gender-btn:hover {
+  background-color: #eee;
+  color: #000;
+}
+
+.gender-btn.active {
+  background-color: #0077ff;
+  color: #fff;
+  border-color: #0077ff;
+}
+
+
+
+
+/* ===== Tooltip für Desktop ===== */
+.category-item {
+  position: relative;
+  cursor: pointer;
+}
+
+.category-item[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: 105%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #222;
+  color: #fff;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  z-index: 999;
+  font-size: 0.9rem;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+/* Tooltip-Farbe im Darkmode */
+@media (prefers-color-scheme: dark) {
+  .category-item[data-tooltip]:hover::after {
+    background: #eee;
+    color: #111;
+  }
+}
+
+/* ===== Mobile Info-Icon + Tooltip ===== */
+.info-icon {
+  font-size: 0.9rem;
+  margin-left: auto;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  user-select: none;
+}
+
+.mobile-tooltip {
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background: #fefefe;
+  color: #222;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  width: max-content;
+  max-width: 280px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Dark Mode Anpassung */
+@media (prefers-color-scheme: dark) {
+  .mobile-tooltip {
+    background: #333;
+    color: #eee;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+
+
+#wopCategoryOptions {
+  max-height: 32vh; /* oder z. B. 50vh, wenn dir 60 noch zu hoch ist */
+  overflow-y: auto;
+  padding-right: 0.5rem; /* etwas Platz, damit Scrollbar nichts überlappt */
+}
+
+#wopCategoryOptions::-webkit-scrollbar {
+  width: 6px;
+}
+
+#wopCategoryOptions::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
+
+/*_________________________________________________________________________*/
+
+
+/* Responsive */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .intro {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+}
+
+
+/*_________________________________________________________________________*/
+
+
+
+/* =======================
+   Dark Mode Styles
+======================= */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #12171f;
+    color: #d6d6d6;
+  }
+
+  header {
+    background-color: #003366;
+    color: #e0e0e0;
+  }
+
+  .intro {
+    background-color: #1f283e;
+    color: #d6d6d6;
+    box-shadow: 0 2px 6px rgba(255,255,255,0.05);
+  }
+
+  .card {
+    background-color: #1e2738;
+    color: #76a9f9;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  }
+
+  .card:hover {
+    background-color: #2a3a5a;
+  }
+
+  .card p {
+    color: #a0aec0;
+  }
+
+  footer {
+    background-color: #1a1a1a;
+    color: #999;
+  }
+
+
+   
+/* === Modal (dunkles Design) === */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  position: relative;
+  background-color: #222;
+  color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+.hidden {
+  display: none;
+}
+
+
+/* sanfte Animation beim Öffnen */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+   
+.modal h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+}
+
+.mode-select {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.mode-btn {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+
+.mode-btn.active {
+  background-color: #0077cc;
+}
+
+.category-select {
+  display: none;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.category-select label {
+  color: #eee;
+  background: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.category-select input[type="checkbox"] {
+  accent-color: #0077cc;
+}
+
+.start-btn {
+  background-color: #0077cc;
+  border: none;
+  padding: 0.8rem 1.4rem;
+  font-size: 1rem;
+  color: white;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.start-btn:hover {
+  background-color: #005fa3;
+}
+
+   
+/* Modal Close Button */
+.close-modal {
+  background: none !important;
+  border: none;
+  position: absolute;
+  top: 1rem;
+  color: fff;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.close-modal:hover {
+  transform: scale(1.3);
+}
+
+
+
+.gender-select {
+  color: #ddd;
+}
+
+.gender-btn {
+  color: #ddd;
+  border-color: #555;
+}
+
+.gender-btn:hover {
+  background-color: #333;
+  color: #fff;
+}
+
+.gender-btn.active {
+  background-color: #4ea3ff;
+  color: #000;
+  border-color: #4ea3ff;
+}
+}
+
+
+
+
+/* ========== MODAL 2 – Spieler:innen-Auswahl ========== */
+
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Fade-In für Modal */
+.modal.show {
+  animation: fadeInScale 0.3s ease-in-out;
+}
+
+.modal h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.player-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.player-name {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.player-name:focus {
+  border-color: #3399ff;
+  outline: none;
+}
+
+#playerList {
+  max-height: 35vh;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.gender-toggle {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: #f5f5f5;
+  user-select: none;
+}
+
+.gender-option {
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 0.95rem;
+  background-color: transparent;
+  color: #333;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.gender-option.active {
+  background: linear-gradient(90deg, #0077ff, #ff33cc);
+  color: white;
+}
+
+/* Start-Button im Modal */
+#startGameBtn {
+  background-color: #3399ff;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background 0.2s ease;
+}
+
+#startGameBtn:hover {
+  background-color: #2b89e0;
+}
+
+/* ❌ Icon */
+#playerModal .close-modal {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 0.7rem;
+  right: 1rem;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+#playerModal .close-modal:hover {
+  transform: scale(1.3);
+}
+
+
+@media (prefers-color-scheme: dark) {
+  .player-name {
+    background-color: #222;
+    color: #eee;
+    border-color: #444;
+  }
+
+  .player-name:focus {
+    border-color: #4ea3ff;
+  }
+
+  .gender-toggle {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  .gender-option {
+    color: #ccc;
+  }
+
+  .gender-option.active {
+    background: linear-gradient(90deg, #4ea3ff, #ff66cc);
+    color: #000;
+  }
+
+  #startGameBtn {
+    background-color: #0077cc;
+  }
+
+  #startGameBtn:hover {
+    background-color: #005fa3;
+  }
+   }
+
+body.modal-open {
+  overflow: hidden;
+   }
+
+
+.gender-option.active {
+  background-color: var(--accent-color);
+  color: #fff;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+
+
+
+
+
+
+/* === WARNBOX STYLING === */
+.warning-box {
+    max-width: 320px;             /* nicht zu breit */
+    margin: 0 0 12px 0;           /* Abstand unten zum Start-Button */
+    padding: 0.6rem 1rem;         /* kompakter */
+    background: linear-gradient(135deg, #ff4d4d, #ff9900);
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    user-select: none;
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+}
+
+.warning-box.hidden {
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+
+/* LIGHT MODE */
+@media (prefers-color-scheme: light) {
+   .warning-box {
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.95), rgba(255, 169, 77, 0.95));
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+   }
+}
+
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    .warning-box {
+        background: linear-gradient(135deg, #cc3333, #cc6600);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    }
+}
+
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+   .warning-box {
+      font-size: 0.95rem;
+      padding: 0.9rem 1.2rem;
+      border-radius: 12px;
+   }
+}
+
+/* Responsive: etwas kleiner bei kleinen Bildschirmen */
+@media (max-width: 400px) {
+    .warning-box {
+        max-width: 90vw;
+        font-size: 0.85rem;
+        padding: 0.5rem 0.9rem;
+        border-radius: 8px;
+    }
+}
+
+
+
+/* Sanftes Einblenden */
+@keyframes warningFadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dezentes Vibrationswackeln */
+@keyframes warningShake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-5px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.warning-box {
+  animation: warningFadeIn 0.4s ease-out;
+}
+
+/* Diese Klasse wird bei erneutem Fehler temporär hinzugefügt */
+.warning-box.shake {
+  animation: warningShake 0.4s ease;
+}
+
+
+
+
+
+
+/* Basislayout für Kategorieboxen */
+.category {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: var(--bg);
+}
+
+/* Info-Icons */
+.tooltip-trigger {
+  cursor: pointer;
+  font-size: 1.2em;
+  user-select: none;
+}
+
+.tooltip-trigger.mobile {
+  display: none;
+}
+
+/* Tooltip-Text */
+.tooltip-text {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 20;
+  max-width: 220px;
+  background: #333;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 6px;
+  font-size: 0.9em;
+  line-height: 1.3;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  display: none;
+}
+
+/* Auf Desktop per Hover sichtbar */
+.tooltip-container:hover .tooltip-text {
+  display: block;
+}
+
+/* Mobil: über JS ein- und ausblendbar */
+.tooltip-container.show .tooltip-text {
+  display: block;
+}
+
+/* Responsive – auf Mobilgeräten das mobile Icon anzeigen */
+@media (hover: none), (max-width: 768px) {
+  .tooltip-trigger.desktop {
+    display: none;
+  }
+  .tooltip-trigger.mobile {
+    display: inline;
+  }
+
+  .tooltip-container:hover .tooltip-text {
+    display: none; /* kein Hover auf Touch */
+  }
+   }

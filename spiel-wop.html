@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wahrheit oder Pflicht – Spiel</title>
+  <link rel="stylesheet" href="style_spiel-wop.css" />
+  <link rel="icon" type="image/png" href="bilder/favicon-96x96.png" sizes="96x96" />
+<style>
+  :root {
+    --btn-bg: #346bc2;
+    --btn-bg-hover: #2959a8;
+    --btn-text: #fff;
+    --penalty-color: #c0392b;
+    --choice-line-color-light: var(--btn-bg);
+    --choice-line-color-dark: rgba(255, 255, 255, 0.75);
+    --choice-text-color-light: var(--btn-bg);
+    --choice-text-color-dark: rgba(255, 255, 255, 0.9);
+    --male-color: #4A90E2;
+    --female-color: #E94A84;
+    --mixed-color: #777777;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --btn-bg: #2d4c7f;
+      --btn-bg-hover: #3a5a99;
+      --penalty-color: #e74c3c;
+      --choice-line-color-light: #356890;
+      --choice-line-color-dark: rgba(255, 255, 255, 0.75);
+      --choice-text-color-light: #356890;
+      --choice-text-color-dark: rgba(255, 255, 255, 0.9);
+    }
+    
+  }
+
+  .player-male { color: var(--male-color); }
+  .player-female { color: var(--female-color); }
+  .player-mixed { color: var(--mixed-color); }
+
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: auto;
+  }
+
+  .fade-out {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+
+  .fade-slide-in {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.4s ease;
+  }
+
+  .fade-slide-out {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.4s ease;
+  }
+
+  .mystery {
+    animation: mysteryFade 0.6s ease forwards;
+  }
+
+  @keyframes mysteryFade {
+    0% { opacity: 0; transform: scale(0.95) rotate(-2deg); filter: blur(4px); }
+    60% { opacity: 0.5; transform: scale(1.02) rotate(1deg); filter: blur(2px); }
+    100% { opacity: 1; transform: scale(1) rotate(0); filter: blur(0); }
+  }
+
+  .pulse {
+    animation: pulseAnim 1.2s ease infinite;
+  }
+
+  @keyframes pulseAnim {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.08); opacity: 0.7; }
+  }
+
+  .zoom-glow {
+    animation: zoomGlowAnim 1s ease;
+  }
+
+  @keyframes zoomGlowAnim {
+    0% { transform: scale(1); text-shadow: none; }
+    50% { transform: scale(1.3); text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+    100% { transform: scale(1); text-shadow: none; }
+  }
+
+  #truthBtn, #dareBtn, #doneBtn {
+    padding: 0.7rem 1.4rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    cursor: pointer;
+    margin: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  #truthBtn:hover, #dareBtn:hover, #doneBtn:hover {
+    background-color: var(--btn-bg-hover);
+    transform: scale(1.03);
+  }
+
+  #penaltyBtn {
+    background-color: transparent;
+    border: 2.5px solid var(--penalty-color);
+    color: var(--penalty-color);
+    font-weight: 700;
+    max-width: 160px;
+    padding: 0.6rem 1.4rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  #penaltyBtn:hover {
+    background-color: var(--penalty-color);
+    color: white;
+  }
+
+  .straf-label {
+    font-size: clamp(1.5rem, 5vw, 3rem);
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Neu: Container für Name und Überschrift, beide zentriert und untereinander */
+  .choice-heading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 2rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .choice-heading {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      color: var(--choice-text-color-light);
+      white-space: nowrap;
+      margin: 0;
+      padding: 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+  .current-player-name {
+    font-weight: 900;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    white-space: nowrap;
+  }
+
+  .question-prompt-text {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+    font-weight: 600;
+    opacity: 0.85;
+  }
+
+  .action-btn.strafaufgabe {
+    background-color: transparent;
+    color: #555;
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    border: 1.5px solid #aaa;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    align-self: center;
+    max-width: 150px;
+  }
+
+  .action-btn.strafaufgabe:hover {
+    background-color: #eee;
+    color: #222;
+    border-color: #888;
+  }
+
+  /* Header-Optimierung */
+  body.compact-header header {
+    padding: 0.8rem 0;
+    animation: headerShrink 0.4s ease forwards;
+    transition: padding 0.4s ease;
+  }
+
+  body.compact-header .header-inner .logo,
+  body.compact-header .header-inner .icon-right {
+    font-size: 1.6rem;
+    transition: font-size 0.4s ease;
+  }
+
+  body.compact-header header h1 {
+    font-size: 1.3rem;
+    transition: font-size 0.4s ease;
+  }
+
+  body.compact-header .title-group .subtitle {
+    display: none;
+  }
+
+  body.compact-header .container {
+    margin-top: 1.2rem;
+    transition: margin-top 0.3s ease;
+  }
+
+  body.compact-header .question-box {
+    padding: 1.2rem;
+    transition: padding 0.3s ease, font-size 0.3s ease;
+  }
+
+  @keyframes headerShrink {
+    from { transform: scaleY(1); }
+    to { transform: scaleY(0.92); }
+  }
+
+  @keyframes headerUnshrink {
+    from { transform: scaleY(0.92); }
+    to { transform: scaleY(1); }
+  }
+
+  @media screen and (max-height: 800px) and (min-width: 768px) and (max-width: 1024px) {
+    body.compact-header header {
+      padding: 0.6rem 0;
+    }
+
+    body.compact-header header h1 {
+      font-size: 1.1rem;
+    }
+
+    body.compact-header .question-box {
+      font-size: 1.05rem;
+      padding: 1rem;
+    }
+  }
+
+  @keyframes textWipeOut {
+    0% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(-40px); }
+  }
+
+  @keyframes textWipeIn {
+    0% { opacity: 0; transform: translateX(40px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .prompt-text-anim-out {
+    animation: textWipeOut 0.35s ease forwards;
+  }
+
+  .prompt-text-anim-in {
+    animation: textWipeIn 0.4s ease forwards;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .choice-heading {
+      color: var(--choice-text-color-dark);
+    }
+  }
+  
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-inner" style="display:flex; align-items:center; gap:1rem; padding: 0 1.5rem;">
+      <div class="logo">🔮</div>
+      <div class="title-group">
+        <h1 style="margin:0; font-weight:700; font-size:1.8rem;">Wahrheit oder Pflicht</h1>
+        <p class="subtitle" style="margin:0; opacity:0.85;">Wähle Wahrheit oder Pflicht und lass dich überraschen!</p>
+      </div>
+      <div class="icon-right" style="margin-left:auto; font-size:1.6rem;">🤐</div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+
+      <h2 id="choiceHeading" class="choice-heading fade-in" style="flex-direction: column; text-align: center;">
+        <span id="currentPlayerName" class="current-player-name player-mixed"></span>
+        <span id="questionPromptText">Wahrheit oder Pflicht?</span>
+      </h2>
+
+      <div id="modeSelection" class="mode-selection fade-in" aria-live="polite">
+        <button id="truthBtn" type="button">Wahrheit</button>
+        <button id="dareBtn" type="button">Pflicht</button>
+      </div>
+
+      <div id="questionView" class="question-view fade-out" style="display:none;">
+        <div class="category-label" id="categoryLabel"></div>
+        <div id="penaltyHeading" class="straf-label mystery" style="display:none;">STRAFAUFGABE</div>
+        <div class="question-box" id="questionBox">Frage erscheint hier...</div>
+        <div class="action-buttons" style="margin-top:1rem; display:flex; justify-content:center; gap:1rem;">
+          <button id="doneBtn">Erledigt / Nächste Frage</button>
+          <button id="penaltyBtn" class="action-btn strafaufgabe">Strafaufgabe</button>
+        </div>
+      </div>
+
+      <button id="backBtn" class="back-button" style="margin-top:2rem;">Zurück zur Startseite</button>
+    </div>
+  </main>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const modeSelection = document.getElementById("modeSelection");
+  const questionView = document.getElementById("questionView");
+  const categoryLabel = document.getElementById("categoryLabel");
+  const penaltyHeading = document.getElementById("penaltyHeading");
+  const questionBox = document.getElementById("questionBox");
+  const doneBtn = document.getElementById("doneBtn");
+  const penaltyBtn = document.getElementById("penaltyBtn");
+  const backBtn = document.getElementById("backBtn");
+  const choiceHeading = document.getElementById("choiceHeading");
+  const currentPlayerNameSpan = document.getElementById("currentPlayerName");
+  const questionPromptText = document.getElementById("questionPromptText");
+
+  let wopData = {};
+  let selectedCategories = [];
+  let wahrheitPool = [];
+  let pflichtPool = [];
+  let currentModeSelected = null;
+
+  let wopPlayers = [];
+  let playerQueue = [];
+
+  function animateHeadingChange(newText) {
+    if (questionPromptText.textContent === newText) return;
+    questionPromptText.classList.remove("prompt-text-anim-in", "prompt-text-anim-out");
+    questionPromptText.classList.add("prompt-text-anim-out");
+    setTimeout(() => {
+      questionPromptText.textContent = newText;
+      questionPromptText.classList.remove("prompt-text-anim-out");
+      questionPromptText.classList.add("prompt-text-anim-in");
+    }, 400);
+  }
+
+
+
+  function applyFadeTransition(outEl, inEl) {
+    outEl.classList.remove("fade-slide-in");
+    outEl.classList.add("fade-slide-out");
+    outEl.style.pointerEvents = "none";
+
+    setTimeout(() => {
+      outEl.style.display = "none";
+      inEl.style.display = "flex";
+      inEl.classList.remove("fade-slide-out");
+      inEl.classList.add("fade-slide-in");
+      inEl.style.pointerEvents = "auto";
+    }, 400);
+  }
+
+  function showElement(el) {
+    el.style.display = "flex";
+    el.classList.remove("fade-slide-out");
+    el.classList.add("fade-slide-in");
+    el.style.pointerEvents = "auto";
+  }
+
+  function hideElement(el) {
+    el.classList.remove("fade-slide-in");
+    el.classList.add("fade-slide-out");
+    el.style.pointerEvents = "none";
+    setTimeout(() => {
+      el.style.display = "none";
+    }, 400);
+  }
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function refillQueue() {
+    playerQueue = shuffle([...wopPlayers]);
+  }
+
+  function getNextPlayer() {
+    if (playerQueue.length === 0) refillQueue();
+    return playerQueue.shift();
+  }
+
+  function getRandomPlayer() {
+    return wopPlayers[Math.floor(Math.random() * wopPlayers.length)];
+  }
+
+  function displayCurrentPlayer(player) {
+    currentPlayerNameSpan.className = "current-player-name";
+    if (!player) {
+      currentPlayerNameSpan.textContent = "";
+      currentPlayerNameSpan.classList.add("player-mixed");
+      return;
+    }
+    currentPlayerNameSpan.textContent = player.name;
+    if (player.gender === "male") currentPlayerNameSpan.classList.add("player-male");
+    else if (player.gender === "female") currentPlayerNameSpan.classList.add("player-female");
+    else currentPlayerNameSpan.classList.add("player-mixed");
+  }
+
+  function updateChoiceHeading(player = null) {
+    displayCurrentPlayer(player);
+  }
+
+  function nameRattern(duration = 2200, interval = 100) {
+    return new Promise(resolve => {
+      const startTime = Date.now();
+      let currentName = null;
+
+      const ratterInterval = setInterval(() => {
+        currentName = getRandomPlayer();
+        if (!currentName) {
+          clearInterval(ratterInterval);
+          resolve(null);
+          return;
+        }
+        displayCurrentPlayer(currentName);
+        if (Date.now() - startTime >= duration) {
+          clearInterval(ratterInterval);
+          resolve(currentName);
+        }
+      }, interval);
+    });
+  }
+
+  function zoomInName() {
+    return new Promise(resolve => {
+      currentPlayerNameSpan.classList.add("zoom-glow");
+      setTimeout(() => {
+        currentPlayerNameSpan.classList.remove("zoom-glow");
+        resolve();
+      }, 1000);
+    });
+  }
+
+  async function startNameSelection() {
+  animateHeadingChange("Wer ist dran?");
+  displayCurrentPlayer(null);
+  currentPlayerNameSpan.style.transform = "scale(1)";
+  choiceHeading.style.display = "flex";
+
+  hideElement(modeSelection);
+  hideElement(questionView);
+
+  await new Promise(r => setTimeout(r, 800));
+
+  await nameRattern();
+  const chosenPlayer = getNextPlayer();
+
+  if (!chosenPlayer) {
+    alert("Keine Spieler:innen zum Auswählen vorhanden.");
+    return null;
+  }
+
+  displayCurrentPlayer(chosenPlayer);
+  await zoomInName();
+
+  animateHeadingChange("Wahrheit oder Pflicht?");
+  updateChoiceHeading(chosenPlayer);
+
+  showElement(modeSelection); // <--- statt modeSelection.style.display = "flex"
+
+  return chosenPlayer;
+}
+
+  function getRandomFromPool(pool) {
+    if (!pool.length) return null;
+    const idx = Math.floor(Math.random() * pool.length);
+    return pool.splice(idx, 1)[0];
+  }
+
+  function showQuestion(mode, player) {
+    currentModeSelected = mode;
+    let question = null;
+
+    if (mode === "truth") {
+      question = getRandomFromPool(wahrheitPool);
+    } else {
+      question = getRandomFromPool(pflichtPool);
+    }
+
+    if (!question) {
+      animateHeadingChange("Keine Fragen mehr");
+      modeSelection.style.display = "none";
+      questionView.style.display = "none";
+      return;
+    }
+
+    const baseText = mode === "truth" ? question.frage : question.text;
+    const labelText = `${mode === "truth" ? "Wahrheit" : "Pflicht"} – ${wopData[question._cat]?.label || "Unbekannt"}`;
+    const fullText = `${player.name}, ${baseText}`;
+
+    categoryLabel.textContent = labelText;
+    penaltyHeading.style.display = "none";
+    questionBox.textContent = fullText;
+    questionBox.classList.remove("mystery");
+
+    penaltyBtn.style.display = "inline-block";
+    doneBtn.textContent = "Erledigt / Nächste Frage";
+
+    animateHeadingChange("Wahrheit oder Pflicht?");
+    updateChoiceHeading(player);
+
+    applyFadeTransition(modeSelection, questionView);
+  }
+
+  function showPenalty() {
+    const alt = currentModeSelected === "truth"
+      ? getRandomFromPool(pflichtPool)
+      : getRandomFromPool(wahrheitPool);
+
+    const text = alt
+      ? (currentModeSelected === "truth" ? alt.text : alt.frage)
+      : "Keine Strafaufgabe verfügbar.";
+
+    penaltyHeading.style.display = "block";
+    penaltyHeading.classList.add("pulse");
+    questionBox.textContent = text;
+    questionBox.classList.add("mystery");
+    penaltyBtn.style.display = "none";
+    doneBtn.textContent = "Zurück zur Auswahl";
+  }
+
+  async function loadQuestions() {
+    try {
+      const res = await fetch("JSON/wop.json");
+      if (!res.ok) throw new Error("HTTP-Fehler " + res.status);
+      return await res.json();
+    } catch (err) {
+      alert("Fehler beim Laden der Fragen: " + err.message);
+      return null;
+    }
+  }
+
+  // Spieler aus localStorage laden
+  try {
+    const storedPlayers = localStorage.getItem("wopPlayers");
+    if (storedPlayers) wopPlayers = JSON.parse(storedPlayers);
+  } catch {
+    wopPlayers = [];
+  }
+
+  if (!wopPlayers.length) {
+    alert("Keine Spieler:innen gefunden! Bitte im Start-Modal Spieler:innen eingeben.");
+    return;
+  }
+
+  wopData = await loadQuestions();
+  if (!wopData) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const categoryParam = urlParams.get("categories");
+
+  selectedCategories = categoryParam && categoryParam.trim()
+    ? categoryParam.split(",").map(cat => cat.trim()).filter(Boolean)
+    : Object.keys(wopData);
+
+  selectedCategories.forEach(catKey => {
+    const category = wopData[catKey];
+    if (!category) return;
+    category.wahrheit?.forEach(q => {
+      q._cat = catKey;
+      wahrheitPool.push(q);
+    });
+    category.pflicht?.forEach(q => {
+      q._cat = catKey;
+      pflichtPool.push(q);
+    });
+  });
+
+  refillQueue();
+  let currentPlayer = await startNameSelection();
+
+  document.getElementById("truthBtn").addEventListener("click", () => {
+    if (!currentPlayer) return;
+    showQuestion("truth", currentPlayer);
+  });
+
+  document.getElementById("dareBtn").addEventListener("click", () => {
+    if (!currentPlayer) return;
+    showQuestion("dare", currentPlayer);
+  });
+
+  penaltyBtn.addEventListener("click", () => {
+    showPenalty();
+  });
+
+  doneBtn.addEventListener("click", async () => {
+    if (penaltyHeading.style.display === "block") {
+      penaltyHeading.style.display = "none";
+      penaltyHeading.classList.remove("pulse");
+      penaltyBtn.style.display = "inline-block";
+      doneBtn.textContent = "Erledigt / Nächste Frage";
+      questionBox.classList.remove("mystery");
+
+      hideElement(questionView);
+      currentPlayer = await startNameSelection();
+      return;
+    }
+
+    hideElement(questionView);
+    currentPlayer = await startNameSelection();
+  });
+
+  backBtn.addEventListener("click", () => {
+    window.location.href = "index.html";
+  });
+});
+</script>
+
+
+
+
+<script>
+function applyCompactHeaderIfNeeded() {
+  const isTabletLandscape = window.innerWidth >= 768 && window.innerHeight <= 650;
+  const body = document.body;
+  const header = document.querySelector("header");
+
+  if (isTabletLandscape) {
+    body.classList.add("compact-header");
+    header.classList.remove("shrink-active");
+  } else {
+    if (body.classList.contains("compact-header")) {
+      header.classList.add("shrink-active");
+      setTimeout(() => {
+        body.classList.remove("compact-header");
+        header.classList.remove("shrink-active");
+      }, 400);
+    }
+  }
+}
+
+// Beim Laden prüfen
+window.addEventListener("load", applyCompactHeaderIfNeeded);
+// Bei jeder Größenänderung prüfen
+window.addEventListener("resize", () => {
+  clearTimeout(window.__resizeTimeout);
+  window.__resizeTimeout = setTimeout(applyCompactHeaderIfNeeded, 150);
+});
+</script>
+
+</body>
+</html>
