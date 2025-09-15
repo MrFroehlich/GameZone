@@ -1,0 +1,40 @@
+{
+  "modes": [
+    {
+      "id": "truth-or-dare",
+      "title": "Wahrheit oder Pflicht",
+      "description": "Der Klassiker für jede Party!",
+      "icon": "🎯"
+    },
+    {
+      "id": "never-have-i-ever",
+      "title": "Ich hab noch nie",
+      "description": "Perfekt, um Geheimnisse zu lüften!",
+      "icon": "🍻"
+    },
+    {
+      "id": "who-would-rather",
+      "title": "Wer würde eher?",
+      "description": "Findet heraus, wie gut ihr euch kennt.",
+      "icon": "🤔"
+    },
+    {
+      "id": "two-truths-one-lie",
+      "title": "2 Wahrheiten, 1 Lüge",
+      "description": "Erkennst du die Lüge?",
+      "icon": "🎭"
+    },
+    {
+      "id": "quiz-battle",
+      "title": "Quiz Battle",
+      "description": "Stellt euer Wissen gegeneinander auf die Probe.",
+      "icon": "🧠"
+    },
+    {
+      "id": "either-or",
+      "title": "Entscheide dich!",
+      "description": "Schnelle Entweder-Oder-Fragen für jede Runde.",
+      "icon": "⚡"
+    }
+  ]
+}
