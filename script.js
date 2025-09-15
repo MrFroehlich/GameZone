@@ -5,7 +5,7 @@ modeToggle.addEventListener("click", () => {
   modeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 });
 
-// Login System (LocalStorage)
+// Login System
 const loginBtn = document.getElementById("login-btn");
 const usernameInput = document.getElementById("username-input");
 const userDisplay = document.getElementById("user-display");
