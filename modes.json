@@ -1,40 +1,50 @@
-{
-  "modes": [
-    {
-      "id": "truth-or-dare",
-      "title": "Wahrheit oder Pflicht",
-      "description": "Der Klassiker für jede Party!",
-      "icon": "🎯"
-    },
-    {
-      "id": "never-have-i-ever",
-      "title": "Ich hab noch nie",
-      "description": "Perfekt, um Geheimnisse zu lüften!",
-      "icon": "🍻"
-    },
-    {
-      "id": "who-would-rather",
-      "title": "Wer würde eher?",
-      "description": "Findet heraus, wie gut ihr euch kennt.",
-      "icon": "🤔"
-    },
-    {
-      "id": "two-truths-one-lie",
-      "title": "2 Wahrheiten, 1 Lüge",
-      "description": "Erkennst du die Lüge?",
-      "icon": "🎭"
-    },
-    {
-      "id": "quiz-battle",
-      "title": "Quiz Battle",
-      "description": "Stellt euer Wissen gegeneinander auf die Probe.",
-      "icon": "🧠"
-    },
-    {
-      "id": "either-or",
-      "title": "Entscheide dich!",
-      "description": "Schnelle Entweder-Oder-Fragen für jede Runde.",
-      "icon": "⚡"
-    }
-  ]
-}
+[
+  {
+    "title": "Wahrheit oder Pflicht",
+    "desc": "Klassiker für mutige Runden",
+    "players": "2-12 Spieler",
+    "color": "#ff7675"
+  },
+  {
+    "title": "Wer würde eher",
+    "desc": "Lustige Vermutungen über Freunde",
+    "players": "3-10 Spieler",
+    "color": "#0984e3"
+  },
+  {
+    "title": "Ich hab noch nie",
+    "desc": "Erfahrt mehr übereinander",
+    "players": "3-15 Spieler",
+    "color": "#a29bfe"
+  },
+  {
+    "title": "Entweder/Oder",
+    "desc": "Schnelle Entscheidungen",
+    "players": "2-8 Spieler",
+    "color": "#00b894"
+  },
+  {
+    "title": "Team-Duelle",
+    "desc": "Zwei Teams treten gegeneinander an",
+    "players": "4-20 Spieler",
+    "color": "#fdcb6e"
+  },
+  {
+    "title": "Quiz-Show",
+    "desc": "Wer sammelt am meisten Punkte?",
+    "players": "2-8 Spieler",
+    "color": "#e17055"
+  },
+  {
+    "title": "Melodien-Raten",
+    "desc": "Errate den Song in 10 Sekunden",
+    "players": "2-12 Spieler",
+    "color": "#6c5ce7"
+  },
+  {
+    "title": "Foto-Challenge",
+    "desc": "Kreative Fotoaufgaben für Punkte",
+    "players": "2-20 Spieler",
+    "color": "#00a8ff"
+  }
+]
