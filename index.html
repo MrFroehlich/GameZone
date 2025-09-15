@@ -7,59 +7,60 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
+  <div class="sidebar">
     <div class="logo">🎮 GameCircle</div>
-    <div class="controls">
-      <button id="mode-toggle">🌙</button>
-      <div id="login-container">
-        <input type="text" id="username-input" placeholder="Dein Name">
-        <button id="login-btn">Login</button>
-      </div>
-      <div id="user-display" class="hidden"></div>
+
+    <div id="login-container">
+      <input type="text" id="username-input" placeholder="Dein Name">
+      <button id="login-btn">Login</button>
     </div>
-  </header>
 
-  <main>
-    <section class="intro">
-      <h1>Willkommen bei GameCircle</h1>
-      <p>Die besten Spiele für jede Runde – spontan, witzig und überall spielbar.</p>
-    </section>
+    <div id="user-display" class="hidden"></div>
 
-    <section id="modes" class="modes-grid">
-      <!-- Spielmodi aus JSON werden hier eingefügt -->
-    </section>
+    <button id="mode-toggle">🌙</button>
+  </div>
 
-    <section class="why">
-      <h2>Warum GameCircle?</h2>
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="icon">⚡</div>
-          <h3>Sofort loslegen</h3>
-          <p>Keine Installation, keine Anmeldung – einfach starten!</p>
+  <div class="main">
+    <main>
+      <section class="intro">
+        <h1>Willkommen bei GameCircle</h1>
+        <p>Die besten Spiele für jede Runde – spontan, witzig und überall spielbar.</p>
+      </section>
+
+      <section id="modes" class="modes-grid">
+        <!-- Spielmodi aus JSON -->
+      </section>
+
+      <section class="why">
+        <h2>Warum GameCircle?</h2>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="icon">⚡</div>
+            <h3>Sofort loslegen</h3>
+            <p>Keine Installation, keine Anmeldung – einfach starten!</p>
+          </div>
+          <div class="why-card">
+            <div class="icon">🤝</div>
+            <h3>Für jede Gruppe</h3>
+            <p>Ob Party oder gemütlicher Abend – passende Spiele sind dabei.</p>
+          </div>
+          <div class="why-card">
+            <div class="icon">🌍</div>
+            <h3>Überall spielbar</h3>
+            <p>GameCircle läuft auf Handy, Tablet und PC – immer dabei.</p>
+          </div>
         </div>
-        <div class="why-card">
-          <div class="icon">🤝</div>
-          <h3>Für jede Gruppe</h3>
-          <p>Ob Party oder gemütlicher Abend – passende Spiele sind dabei.</p>
-        </div>
-        <div class="why-card">
-          <div class="icon">🌍</div>
-          <h3>Überall spielbar</h3>
-          <p>GameCircle läuft auf Handy, Tablet und PC – immer dabei.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <div id="status-widget">🟢 GameCircle bereit zum Spielen</div>
+    <footer>
+      <p>© 2025 GameCircle | <a href="#">Impressum</a> | <a href="#">Datenschutz</a></p>
+    </footer>
+  </div>
 
-  <footer>
-    <p>© 2025 GameCircle</p>
-    <nav>
-      <a href="#">Datenschutz</a>
-      <a href="#">Impressum</a>
-    </nav>
-  </footer>
+  <div id="status-widget">
+    <span class="icon">🟢</span> GameCircle bereit zum Spielen
+  </div>
 
   <script src="script.js"></script>
 </body>
